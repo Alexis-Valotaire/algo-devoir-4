@@ -16,8 +16,63 @@ D'autre part, si n est composé, alors la relation (\ref{eqQ21}) est fausse pour
 
 \textbf{a)} En utilisant ces deux observations, trouvez un algorithme de Monte Carlo 50\%-correct qui détermine si un entier positif n est premier. Vous pouvez supposer qu’il est possible de tester efficacement si la relation (\ref{eqQ21}) est vraie. \\ 
 
-\textbf{b)} Votre algorithme est-il biaisé? Si oui, est-il vrai-biaisé ou faux biaisé? Expliquez. \\
+\begin{algorithm}[H]
+	\KwData{\( entier \: n, entier \: k \)}
+    \KwResult{Vrai si n est premier ou Faux si n est composé}
+   
+    \vspace{0.2cm}
+	\For{\( i \gets 1 $ \KwTo $ k \)}
+    {
+		\(b \gets uniforme(2 \dots n-2) \)
+	
+		\If{ \(PGCD(b,n) = 1\)}{
+	    		\If{ \(b^{(n-1)/2} mod \: n \neq J(b,n)\)}{
+			    	\Return Faux
+				}
+	    	}
+	}
+	
+	\Return Vrai
+	
+      \caption{VerifSiPremierMonteCarlo50Correct} 
+\end{algorithm}
+
+\vspace{0.4cm}
+
+\textbf{b)} Votre algorithme est-il biaisé? Si oui, est-il vrai-biaisé ou faux-biaisé? Expliquez. \\
+
+Notre algorithme est biaisé puisqu'il possède une probabilité de 50\% ce qui est la limite inférieure de la condition pour être considéré comme biaisé. De plus, il est faux-biaisé car nous sommes sûr d'avoir un \(n\) composé lorsque la fonction retourne \(Faux\), contrairement à avoir un \(n\) premier où nous avons 50\% de chance d'avoir un faux-vrai.
+
+\newpage
 
 \textbf{c)} Montrez comment vous pouvez modifier votre algorithme pour en obtenir un qui soit 99.999\%-correct.
+
+\vspace{0.2cm}
+
+\begin{algorithm}[H]
+	\KwData{\( entier \: n, entier \: k \)}
+    \KwResult{Vrai si n est premier ou Faux si n est composé}
+   
+    \(temoin \gets 0 \) 
+   
+    \vspace{0.2cm}
+	\For{\( i \gets 1 $ \KwTo $ k \)}
+    {
+		\(b \gets uniforme(2 \dots n-2) \)
+	
+		\If{ \(PGCD(b,n) = 1\)}{
+	    		\If{ \(b^{(n-1)/2} mod \: n \neq J(b,n)\)}{
+					\(temoin++\)			    	
+				}
+	    	}
+	}
+	\If{\(\frac{temoin}{k} \cdot 100 \geq 50 \)}{
+		\Return Faux
+	} \Else{
+		\Return Vrai
+	}
+	
+      \caption{VerifSiPremierMonteCarlo99Correct} 
+\end{algorithm}
 
 \end{document}
