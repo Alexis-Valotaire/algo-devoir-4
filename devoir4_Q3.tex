@@ -7,6 +7,43 @@ Considérez deux algorithmes de Monte-Carlo \(A\) et \(B\) pour résoudre un mê
 
 \textbf{a)} Utilisez ces deux algoritmes pour construire un algorithme de Las Vegas pour résoudre le problème \\
 
-\textbf{b)} Analysez le temps d'exécution de votre algorithme\\
+Il est possible de résoudre ce problème en utilisant un premier algorithme pour calculer une solution et si celle-ci ne produit pas un résultat exactement vrai, d'utiliser le second algorithme pour tester si la même entrée offre un résultat exactement faux. Cela est possible puisque les algorithmes sont biaisés différemment.  \\
+
+\begin{algorithm}[H]
+	\KwData{\( entier \: n \)}
+  \KwResult{Vrai ou Faux}
+
+	\For{\( i \gets 1 $ \KwTo $ \infty \)}
+  {
+		\If{ \( A(i) = Vrai \)}{
+			\Return \( Vrai \)
+		}
+		\If{ \( B(i) = Faux \)}{
+			\Return \( Faux \)
+		}
+	}
+
+  \caption{Las Vegas en utilisant 2 Monte Carlo}
+\end{algorithm}
+
+\hfill \break Puisque l'algorithm tourne sans arrêt (boucle sans fin) jusqu'à ce qu'une solution correcte ressorte, cela constitue un algorithme de Las Vegas. \\
+
+\textbf{b)} Analysez le temps d'exécution de votre algorithme \\
+
+Il est facile de calculer le temps d'exécution de cet algorithme. En effet, le premier algorithme à une probabilité de donner la réponse vrai au moins qvec une probabilité \( 0 < q < 0.5 \) (car sinon il ne serais pas vrai-biaisé). De manière analogue, on trouve que la borne supérieure est d'une probabilité de 0,5. \\
+
+On peux donc calculer le temps d'exécution de la manière suivante :
+
+\[ \sum_{i=1}^{\infty} {i 0,5^i * Boucle} \]
+
+\[ \sum_{i=1}^{\infty} {i 0,5^i * (TA(n) + TB(n))} \]
+
+\[ (TA(n) + TB(n)) \sum_{i=1}^{\infty} {i 0,5^i} \]
+
+\[ 2 * (TA(n) + TB(n)) \]
+
+\hfill \break On voit donc que le temps d'exécution est en temps :
+
+\[ 2 * (TA(n) + TB(n)) = \mathcal{O}(2 * (TA(n) + TB(n))) \approx \mathcal{O}((TA(n) + TB(n)) \]
 
 \end{document}
